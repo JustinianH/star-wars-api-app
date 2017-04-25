@@ -1,0 +1,95 @@
+ <!DOCTYPE html>
+<html lang="en-us" ng-app="memorizerApp">
+    <head>
+        <% include templates/commonHead.ejs %>
+
+    </head>
+    <body>
+
+        <% include templates/header.ejs %>
+
+        <div class="container">
+
+            <h1> <%= header %> </h1>
+
+            <div class="row" id="characterListRow">
+                    <% for (var i = 0; i < obj.length; i++) {  %>
+                <div class="col-md-2">
+
+                    <div>
+                        <button id="<%= i %>" class="btn btn-default characterListing"> <%= obj[i].name %> </button>                           
+                    </div>
+                </div>
+                    <% }%>
+
+            </div>
+
+            <div id="character-modal-list">
+
+                <div class="row">
+                <% for (var i = 0; i < obj.length; i++) {  %>
+                    <div id="<%= 'character'+i %>" class="characterDiv">
+                        <% 
+                            <!-- Strip spaces from variable -->
+                            var name = obj[i].name;
+                            var flatName = "";
+                            for (var x = 0; x < name.length; x++) {
+                                var char = name.charAt(x);
+                                if (char === " ") {
+                                    flatName+="";
+                                }
+                                else {
+                              	flatName+=char;
+                                }                     
+                            }
+                        %>
+                        <div class="col-md-6" id="character-picture" style="background-image: url('/img/character-images/<%=flatName%>.png')">
+                            
+                            <img src="img/Star-Wars-card.png" alt="">        
+                            <!--<img src="/img/character-images/<%=name%>.png">-->
+
+                        </div>
+                        <div class="col-md-6" id="character-details">
+                            <ul>
+                                
+                                <li>Name: <%= obj[i].name %></li>
+                                <li>Height: <%= obj[i].height %></li>
+                                <li>Mass: <%= obj[i].mass %></li>
+                                <li>Hair: <%= obj[i].hair_color %></li>
+                                <li>Skin: <%= obj[i].skin_color %></li>
+                                <li>Eyes: <%= obj[i].eye_color %></li>
+                                <li>Gender: <%= obj[i].gender %></li>
+                                <li>Birth Year: <%= obj[i].birth_year %></li>
+                                <!--Need to get films object here and match charachter film URL to it to get title-->
+
+                            <ul>
+                        </div>
+
+                    </div>
+                    <% }%>
+                </div>
+            </div>
+
+		</div>
+
+    </body>
+
+    <footer>
+        <script>
+
+            window.onload = function() {
+                $('.characterListing').each(function(){
+                    var characterId = 'character'+$(this).attr('id');
+                        $(this).click(function(){
+                            $('.characterDiv').hide();
+                            $('#'+characterId).toggle();
+                        })
+
+                })
+            }
+
+        </script>
+
+
+    </footer>
+</html>

@@ -1,0 +1,98 @@
+ <!DOCTYPE html>
+<html lang="en-us" ng-app="memorizerApp">
+    <head>
+        <% include templates/commonHead.ejs %>
+
+    </head>
+    <body>
+
+        <% include templates/header.ejs %>
+
+        <div class="container">
+
+            <h1> <%= header %> </h1>
+
+            <div class="row" id="characterListRow">
+                    <% for (var i = 0; i < obj.length; i++) {  %>
+                <div class="col-md-2">
+
+                    <div>
+                        <button id="<%= i %>" class="btn btn-default characterListing"> <%= obj[i].name %> </button>                           
+                    </div>
+                </div>
+                    <% }%>
+
+            </div>
+
+            <div id="character-modal-list">
+
+                <%= obj.films %>
+
+                <div class="row">
+                <% for (var i = 0; i < obj.length; i++) {  %>
+                    <div id="<%= 'character'+i %>" class="characterDiv">
+                        <% 
+                            var name = obj[i].name;
+                            console.log(name+'\n');
+                            var flatName = "";
+                            for (var x = 0; x < name.length; x++) {
+                                var char = name.charAt(x);
+                                if (char === " ") {
+                                    flatName+="";
+                                }
+                                else {
+                              	flatName+=char;
+                                }                     
+                            }
+                            console.log(flatName+'\n');
+                        %>
+                        <div class="col-md-6" id="planet-picture" style="background-image: url('/img/planet-images/<%=flatName%>.png')">
+                            
+                            <img src="img/Star-Wars-card.png" alt="">        
+
+                        </div>
+                        <div class="col-md-6" id="character-details">
+                            <ul>
+                                
+                                <li>Name: <%= obj[i].name %></li>
+                                <li>Climat: <%= obj[i].climate %></li>
+                                <li>Diameter: <%= obj[i].diameter %></li>
+                                <li>Gravity: <%= obj[i].gravity %></li>
+                                <li>Terrain: <%= obj[i].terrain %></li>
+                                <li>Surface Water: <%= obj[i].surface_water %></li>
+                                <li>Population: <%= obj[i].population %></li>
+
+
+                            <ul>
+                        </div>
+
+                    </div>
+                    <% }%>
+                </div>
+            </div>
+
+		</div>
+
+
+
+    </body>
+
+    <footer>
+        <script>
+
+            window.onload = function() {
+                $('.characterListing').each(function(){
+                    var characterId = 'character'+$(this).attr('id');
+                        $(this).click(function(){
+                            $('.characterDiv').hide();
+                            $('#'+characterId).toggle();
+                        })
+
+                })
+            }
+
+        </script>
+
+
+    </footer>
+</html>

@@ -1,0 +1,93 @@
+ <!DOCTYPE html>
+<html lang="en-us" ng-app="memorizerApp">
+    <head>
+        <% include templates/commonHead.ejs %>
+
+    </head>
+    <body>
+
+        <% include templates/header.ejs %>
+
+        <div class="container">
+
+            <h1> <%= header %> </h1>
+
+            <div class="row" id="characterListRow">
+                    <% for (var i = 0; i < obj.length; i++) {  %>
+                <div class="col-md-3">
+
+                    <div>
+                        <button id="<%= i %>" class="btn btn-default characterListing"> <%= obj[i].title %> </button>                           
+                    </div>
+                </div>
+                    <% }%>
+
+            </div>
+
+            <div id="character-modal-list">
+
+
+                <div class="row">
+                <% for (var i = 0; i < obj.length; i++) {  %>
+                    <div id="<%= 'character'+i %>" class="characterDiv">
+                        <% 
+                            var title = obj[i].title;
+                            console.log(title+'\n');
+                            var flatName = "";
+                            for (var x = 0; x < title.length; x++) {
+                                var char = title.charAt(x);
+                                if (char === " ") {
+                                    flatName+="";
+                                }
+                                else {
+                              	flatName+=char;
+                                }                     
+                            }
+                        %>
+                        <div class="col-md-6" id="movie-poster" style="background-image: url('/img/films/<%=flatName%>.png')">
+                            
+                           
+                        </div>
+                        <div class="col-md-6" id="character-details">
+                            <ul>
+                                
+                                <li>Title: <%= obj[i].title %></li>
+                                <li>Episode: <%= obj[i].episode_id %></li>
+                                <li>Opening Crawl: <%= obj[i].opening_crawl %></li>
+                                <li>Director: <%= obj[i].director %></li>
+                                <li>Produce: <%= obj[i].producer %></li>
+                                <li>Release Date: <%= obj[i].release_date %></li>
+
+                            <ul>
+                        </div>
+
+                    </div>
+                    <% }%>
+                </div>
+            </div>
+
+		</div>
+
+
+
+    </body>
+
+    <footer>
+        <script>
+
+            window.onload = function() {
+                $('.characterListing').each(function(){
+                    var characterId = 'character'+$(this).attr('id');
+                        $(this).click(function(){
+                            $('.characterDiv').hide();
+                            $('#'+characterId).toggle();
+                        })
+
+                })
+            }
+
+        </script>
+
+
+    </footer>
+</html>
